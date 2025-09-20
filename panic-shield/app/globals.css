@@ -235,12 +235,17 @@ body {
   left: 0;
   right: 0;
   max-width: 480px;
+  height: 72px;
   margin: 0 auto;
-  background: var(--bg);
-  border-top: 1px solid var(--border);
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
   display: flex;
   justify-content: space-around;
+  align-items: center;
   padding: 8px 0;
+  z-index: 1000;
+  padding-bottom: env(safe-area-inset-bottom);
 }
 
 .nav-item {

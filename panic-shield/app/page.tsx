@@ -19,9 +19,7 @@ export default function EmotionWheelApp() {
       {currentPage === 'trends' && <TrendsPage onNavigate={setCurrentPage} />}
       {currentPage === 'achievements' && <AchievementsPage onNavigate={setCurrentPage} />}
 
-      {currentPage !== 'panic' && (
-        <BottomNav currentPage={currentPage} onNavigate={setCurrentPage} />
-      )}
+      <BottomNav currentPage={currentPage} onNavigate={setCurrentPage} />
     </div>
   );
 }
