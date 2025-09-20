@@ -352,18 +352,20 @@ function HorizontalBarDataPoints({
 /**
  * Weekly chart data points with stacked emotion blocks
  */
+interface WeeklyDataPoint {
+  dayOfWeek: number;
+  count: number;
+  emotions: Array<{ name: string; color: string; count: number }>;
+}
+
 export function WeeklyDataPoints({
   data,
   width = 300,
   height = 80,
   onPointHover,
   onPointClick
-}: ChartDataPointsProps & {
-  data: Array<{
-    dayOfWeek: number;
-    count: number;
-    emotions: Array<{ name: string; color: string; count: number }>;
-  }>;
+}: Omit<ChartDataPointsProps, 'data'> & {
+  data: WeeklyDataPoint[];
 }) {
   const dayWidth = width / 7;
 
