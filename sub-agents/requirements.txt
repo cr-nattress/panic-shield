@@ -1,0 +1,9 @@
+# Python dependencies for sub-agents workspace (Windows dev env)
+# Keep this minimal; pin versions for reproducibility.
+# Python 3.10+
+
+PyYAML==6.0.2
+requests==2.32.3
+rich==13.9.2
+anthropic==0.36.0
+httpx==0.27.2

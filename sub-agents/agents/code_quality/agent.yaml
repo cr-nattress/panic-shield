@@ -1,0 +1,15 @@
+id: code_quality
+name: Code Quality Metrics Agent
+version: 0.1.0
+entry_module: agents.code_quality.main
+summary: "Analyzes repositories to compute code quality metrics (LOC, complexity, duplication, smells)."
+maintainers:
+  - handle: "team-core"
+language_support:
+  - python
+  - javascript
+outputs:
+  metrics_dir: ../../data/metrics/code_quality
+  reports_dir: ../../data/reports/code_quality
+notes: |
+  Foundation-only scaffold. No execution logic yet. Modules are placeholders for future implementation.

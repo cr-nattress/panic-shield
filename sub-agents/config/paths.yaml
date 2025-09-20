@@ -1,0 +1,6 @@
+# Path configuration (placeholder)
+paths:
+  agents_dir: ./agents
+  metrics_dir: ./data/metrics
+  reports_dir: ./data/reports
+  backlog_generated: ./backlog/generated

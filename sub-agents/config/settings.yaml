@@ -1,0 +1,6 @@
+# Global settings for sub-agents (placeholder)
+# Stdlib-only foundation: orchestrator does not parse YAML yet.
+run:
+  mode: foundation
+  max_parallel_agents: 1
+  output_dir: ./data

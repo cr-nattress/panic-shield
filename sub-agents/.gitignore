@@ -1,0 +1,18 @@
+# Sub-agents workspace ignores
+.venv/
+__pycache__/
+*.pyc
+.env
+*.env
+.data/
+/data/metrics/
+/data/reports/
+/backlog/generated/
+
+# Allow placeholders in ignored directories
+!/data/metrics/.gitkeep
+!/data/metrics/**/.gitkeep
+!/data/reports/.gitkeep
+!/data/reports/**/.gitkeep
+!/backlog/generated/.gitkeep
+!/backlog/generated/**/.gitkeep

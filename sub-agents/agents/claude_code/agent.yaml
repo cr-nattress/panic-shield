@@ -1,0 +1,9 @@
+id: claude_code
+name: Claude Code Review Sub-Agent
+version: 0.1.0
+entry_module: agents.claude_code.main
+summary: "Uses Claude to pre-test and review local agent code (e.g., scanner/complexity) before enabling execution."
+notes: |
+  This sub-agent reads specified source files and asks Claude for a structured review
+  to validate logic, edge cases, and improvement suggestions. It writes a Markdown
+  report under data/reports/claude_code.

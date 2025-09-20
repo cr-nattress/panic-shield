@@ -48,9 +48,9 @@ export function StoreProvider({ children }: { children: ReactNode }) {
 
         // Load emotions from secure storage
         const emotions = await secureStorage.getAllEmotions();
-        const logsWithIds = emotions.map(emotion => ({
+        const logsWithIds = emotions.map((emotion, index) => ({
           ...emotion,
-          id: emotion.id || `log_${Date.now()}`,
+          id: emotion.id || `log_${Date.now()}_${index}_${Math.random().toString(36).substr(2, 9)}`,
           timestamp: emotion.timestamp || new Date().toISOString()
         }));
         setLogs(logsWithIds);
@@ -135,7 +135,7 @@ export function StoreProvider({ children }: { children: ReactNode }) {
       // Fallback to localStorage
       const newLog: Log = {
         ...log,
-        id: `log_${Date.now()}`,
+        id: `log_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
         timestamp: new Date().toISOString()
       };
 
