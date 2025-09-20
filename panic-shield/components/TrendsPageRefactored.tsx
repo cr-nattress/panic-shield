@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronLeft, Calendar, LineChart, PieChart, Activity } from 'lucide-react';
+import { Calendar, LineChart, PieChart, Activity } from 'lucide-react';
 import { useTrendsData } from '@/hooks/useTrendsData';
 import EmotionChart from '@/components/charts/EmotionChartRefactored';
 import TrendsSummaryCard from '@/components/trends/TrendsSummaryCard';
@@ -23,9 +23,6 @@ export default function TrendsPageRefactored({ onNavigate }: TrendsPageRefactore
   return (
     <div className="page trends-page">
       <div className="header">
-        <button onClick={() => onNavigate('home')} className="back-btn">
-          <ChevronLeft size={24} />
-        </button>
         <h2>Your Trends</h2>
       </div>
 

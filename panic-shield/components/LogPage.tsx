@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
-import { ChevronLeft, Undo2, Check, Heart, Clock, MessageSquare, TrendingUp } from 'lucide-react';
+import { Undo2, Check, Heart, Clock, MessageSquare, TrendingUp } from 'lucide-react';
 import { useStore } from '@/contexts/StoreContext';
 import EmotionWheel from './EmotionWheelRefactored';
 import { TRIGGER_CATEGORIES, getQuickSuggestion, getSubEmotionById, getEmotionCore } from '@/utils/emotionDataEnhanced';
@@ -112,9 +112,6 @@ export default function LogPage({ onNavigate }: LogPageProps) {
   return (
     <div className="page log-page">
       <div className="header">
-        <button onClick={() => onNavigate('home')} className="back-btn">
-          <ChevronLeft size={24} />
-        </button>
         <h2>Quick Log</h2>
         {showUndo && (
           <button onClick={handleUndo} className="undo-btn">

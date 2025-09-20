@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import { ChevronLeft } from 'lucide-react';
 import useAchievements from '@/hooks/useAchievements';
 import StreakDisplay from '@/components/achievements/StreakDisplay';
 import ProgressMetrics from '@/components/achievements/ProgressMetrics';
@@ -41,9 +40,6 @@ export default function AchievementsPageRefactored({ onNavigate }: AchievementsP
   return (
     <div className="page achievements-page">
       <div className="header">
-        <button onClick={() => onNavigate('home')} className="back-btn">
-          <ChevronLeft size={24} />
-        </button>
         <h2>Achievements</h2>
       </div>
 

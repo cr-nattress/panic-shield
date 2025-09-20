@@ -52,6 +52,14 @@ body {
   padding-bottom: 60px;
 }
 
+.app-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  position: relative;
+}
+
 .page {
   flex: 1;
   padding: 16px;

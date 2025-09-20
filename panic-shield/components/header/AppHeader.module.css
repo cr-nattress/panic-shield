@@ -1,0 +1,227 @@
+.appHeader {
+  position: sticky;
+  top: 0;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 16px;
+  background: var(--header-bg, rgba(255, 255, 255, 0.95));
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+  z-index: 100;
+  transition: all 0.3s ease;
+}
+
+/* Dark mode support */
+:global(.dark) .appHeader {
+  background: var(--header-bg-dark, rgba(17, 24, 39, 0.95));
+}
+
+/* Header sections */
+.headerLeft,
+.headerRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.headerCenter {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-width: 0; /* Allow text truncation */
+}
+
+.headerTitle {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.headerSubtitle {
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+  margin-top: 2px;
+  line-height: 1;
+}
+
+/* Buttons */
+.menuButton,
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  padding: 8px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  touch-action: manipulation;
+}
+
+.menuButton:hover,
+.iconButton:hover {
+  background: var(--secondary);
+}
+
+.menuButton:active,
+.iconButton:active {
+  transform: scale(0.95);
+}
+
+/* Minimal variant */
+.appHeader.minimal {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+}
+
+.appHeader.minimal .headerTitle {
+  font-size: 16px;
+}
+
+.appHeader.minimal .headerSubtitle {
+  display: none;
+}
+
+/* Panic variant */
+.appHeader.panic {
+  background: rgba(239, 68, 68, 0.98);
+  color: white;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.appHeader.panic .headerTitle {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.appHeader.panic .headerSubtitle {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 14px;
+}
+
+.appHeader.panic .menuButton,
+.appHeader.panic .iconButton {
+  color: white;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.appHeader.panic .menuButton:hover,
+.appHeader.panic .iconButton:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* Emergency call button for panic mode */
+.emergencyCall {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 100px;
+  height: 40px;
+  padding: 8px 20px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 2px solid white;
+  border-radius: 20px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  animation: pulse 2s infinite;
+}
+
+.emergencyCall:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+.emergencyCall:active {
+  transform: scale(0.98);
+}
+
+.emergencyText {
+  font-size: 16px;
+  font-weight: 700;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(255, 255, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(255, 255, 255, 0);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 380px) {
+  .appHeader {
+    padding: 0 12px;
+  }
+
+  .headerTitle {
+    font-size: 16px;
+  }
+
+  .headerSubtitle {
+    font-size: 11px;
+  }
+
+  .menuButton,
+  .iconButton {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .emergencyCall {
+    animation: none;
+  }
+
+  .menuButton:active,
+  .iconButton:active {
+    transform: none;
+  }
+}
+
+/* Focus indicators */
+.menuButton:focus-visible,
+.iconButton:focus-visible,
+.emergencyCall:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+.appHeader.panic .menuButton:focus-visible,
+.appHeader.panic .iconButton:focus-visible,
+.appHeader.panic .emergencyCall:focus-visible {
+  outline: 2px solid white;
+  outline-offset: 2px;
+}

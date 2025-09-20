@@ -8,19 +8,50 @@ This backlog contains the refactoring plan for oversized Next.js components in t
 ```
 backlog/
 ├── epics/
-│   └── EP-NEXT-Component-Refactor.md   # Main epic for refactoring initiative
+│   ├── EP-NEXT-Component-Refactor.md   # Main epic for refactoring initiative
+│   ├── EP-006-Grounding-UI-Fix.md      # Grounding exercise UI enhancements
+│   ├── EP-007-Additional-Component-Refactoring.md  # Additional large components
+│   └── EP-008-Application-Header.md    # App header with menu drawer
 ├── stories/
 │   ├── US-NEXT-001-refactor-PanicPage.md
 │   ├── US-NEXT-002-refactor-TrendsPage.md
 │   ├── US-NEXT-003-refactor-EmotionWheel.md
 │   ├── US-NEXT-004-refactor-AchievementsPage.md
-│   └── US-NEXT-005-refactor-EmotionChart.md
+│   ├── US-NEXT-005-refactor-EmotionChart.md
+│   ├── US-GND-001 through US-GND-009   # Grounding UI fixes
+│   ├── US-REF-001 through US-REF-004   # Additional refactoring
+│   └── US-HDR-001 through US-HDR-012   # Header implementation
 ├── templates/
 │   └── PR-Refactor.md                  # PR template for refactoring
 ├── register.json                       # Machine-readable component registry
 ├── refactor-map.md                     # Visual extraction strategy
 └── README.md                           # This file
 ```
+
+## Active Epics
+
+### EP-008: Application Header with Menu Drawer
+**Priority**: High | **Status**: Ready for Development | **Effort**: 7-10 days
+
+Implement unified application header with hamburger menu drawer to provide:
+- Consistent app identity and navigation
+- Universal access to theme toggle and settings
+- Quick stats and user profile section
+- Emergency contacts always available
+- Professional mobile app experience
+
+**User Stories**: 12 stories (US-HDR-001 through US-HDR-012)
+
+### EP-006: Grounding UI Enhancement
+**Priority**: Critical | **Status**: In Progress | **Effort**: 3-5 days
+
+Fix critical UI issues in the grounding exercise:
+- Text visibility and contrast
+- Touch target sizes
+- Bottom navigation visibility
+- Input field improvements
+
+**User Stories**: 9 stories (US-GND-001 through US-GND-009)
 
 ## Component Registry
 
