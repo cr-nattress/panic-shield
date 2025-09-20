@@ -362,6 +362,37 @@
   padding: 8px !important;
 }
 
+/* Switch Exercise Button - High Visibility */
+.panic-page .switch-exercise {
+  margin-top: 24px !important;
+  padding: 16px 32px !important;
+  background: rgba(255, 255, 255, 0.25) !important;
+  border: 2px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 24px !important;
+  color: white !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3) !important;
+  cursor: pointer !important;
+  transition: all 0.3s ease !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 8px !important;
+  min-width: 200px !important;
+  opacity: 1 !important;
+}
+
+.panic-page .switch-exercise:hover {
+  background: rgba(255, 255, 255, 0.35) !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2) !important;
+}
+
+.panic-page .switch-exercise:active {
+  transform: scale(0.98) !important;
+}
+
 /* Back Button */
 .panic-page .back-button {
   position: fixed !important;
