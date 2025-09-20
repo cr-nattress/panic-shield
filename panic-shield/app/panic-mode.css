@@ -302,6 +302,18 @@
   margin-bottom: 16px !important;
   min-height: 56px !important;
   text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2) !important;
+  touch-action: manipulation !important;
+  transition: all 0.2s ease !important;
+}
+
+.panic-page .grounding-input:active {
+  transform: scale(0.98) !important;
+}
+
+@media (hover: hover) {
+  .panic-page .grounding-input:hover {
+    background: rgba(255, 255, 255, 0.25) !important;
+  }
 }
 
 .panic-page .grounding-input:last-child {
@@ -311,6 +323,43 @@
 .panic-page .grounding-input::placeholder {
   color: rgba(255, 255, 255, 0.8) !important;
   opacity: 0.7 !important;
+}
+
+/* Button enhancements for touch targets */
+.panic-page button,
+.panic-page .btn-primary,
+.panic-page .btn-secondary {
+  min-height: 56px !important;
+  padding: 16px 32px !important;
+  font-size: 16px !important;
+  font-weight: 600 !important;
+  position: relative !important;
+  touch-action: manipulation !important;
+  transition: all 0.2s ease !important;
+}
+
+/* Invisible touch area extension */
+.panic-page button::before {
+  content: '' !important;
+  position: absolute !important;
+  top: -8px !important;
+  left: -8px !important;
+  right: -8px !important;
+  bottom: -8px !important;
+}
+
+.panic-page button:active {
+  transform: scale(0.98) !important;
+}
+
+/* Icon button touch targets */
+.panic-page .icon-button {
+  min-width: 44px !important;
+  min-height: 44px !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 8px !important;
 }
 
 /* Back Button */
