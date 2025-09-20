@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["-y", "playwright-mcp"]
+    },
+    "puppeteer": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-puppeteer"]
+    },
+    "supabase": {
+      "command": "npx",
+      "args": [
+        "supabase",
+        "mcp"
+      ],
+      "env": {
+        "SUPABASE_URL": "https://yvtkwmnycoahkhjhrmpf.supabase.co",
+        "SUPABASE_SERVICE_ROLE_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2dGt3bW55Y29haGtoamhybXBmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc1NzU1ODE4NCwiZXhwIjoyMDczMTM0MTg0fQ.GQp4sjf3uhtuFx6-DWwprBRPAum3P-s4QkpPTowSbv4"
+      }
+    },
+    "git": {
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-git"]
+    }
+  }
+}

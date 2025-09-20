@@ -1,0 +1,337 @@
+/* ============================================
+   PANIC SHIELD DESIGN SYSTEM
+   ============================================ */
+
+/* ============================================
+   1. TYPOGRAPHY SYSTEM (US-UI-001)
+   ============================================ */
+:root {
+  /* Typography Scale - Minor Third (1.25) */
+  --font-size-xs: 0.75rem;   /* 12px */
+  --font-size-sm: 0.875rem;  /* 14px */
+  --font-size-base: 1rem;    /* 16px */
+  --font-size-lg: 1.25rem;   /* 20px */
+  --font-size-xl: 1.5rem;    /* 24px */
+  --font-size-2xl: 2rem;     /* 32px */
+  --font-size-3xl: 2.5rem;   /* 40px */
+
+  /* Font Weights */
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  /* Line Heights */
+  --line-height-tight: 1.25;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.75;
+}
+
+/* Typography Classes */
+.heading-1 {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.02em;
+}
+
+.heading-2 {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  letter-spacing: -0.01em;
+}
+
+.heading-3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-normal);
+}
+
+.subtitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--text-secondary);
+}
+
+.body-text {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+}
+
+.caption {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-normal);
+  color: var(--text-muted);
+}
+
+/* ============================================
+   2. BORDER RADIUS SYSTEM (US-UI-002)
+   ============================================ */
+:root {
+  --radius-xs: 4px;      /* Badges, chips */
+  --radius-sm: 6px;      /* Input fields */
+  --radius-md: 8px;      /* Buttons */
+  --radius-lg: 12px;     /* Cards */
+  --radius-xl: 16px;     /* Modals, large cards */
+  --radius-2xl: 20px;    /* Special emphasis */
+  --radius-full: 9999px; /* Circular elements */
+}
+
+/* ============================================
+   3. SHADOW SYSTEM (US-UI-004)
+   ============================================ */
+:root {
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.15);
+  --shadow-2xl: 0 24px 48px rgba(0, 0, 0, 0.2);
+  --shadow-inner: inset 0 2px 4px rgba(0, 0, 0, 0.06);
+}
+
+.elevation-1 { box-shadow: var(--shadow-sm); }
+.elevation-2 { box-shadow: var(--shadow-md); }
+.elevation-3 { box-shadow: var(--shadow-lg); }
+.elevation-4 { box-shadow: var(--shadow-xl); }
+
+/* ============================================
+   4. COLOR SYSTEM (US-UI-005)
+   ============================================ */
+:root {
+  /* Light Mode Colors */
+  --text-primary: #333333;      /* 12.63:1 on white */
+  --text-secondary: #666666;    /* 5.74:1 on white */
+  --text-muted: #999999;        /* 2.85:1 - use sparingly */
+  --text-disabled: #AAAAAA;     /* 2.32:1 - disabled only */
+
+  /* Backgrounds */
+  --bg-primary: #FFFFFF;
+  --bg-secondary: #F8F9FA;
+  --bg-tertiary: #F0F1F3;
+
+  /* Interactive */
+  --link-color: #0066CC;        /* 5.48:1 on white */
+  --link-hover: #0052A3;        /* 7.04:1 on white */
+
+  /* Status Colors */
+  --success: #22C55E;
+  --success-light: #86EFAC;
+  --warning: #F59E0B;
+  --warning-light: #FDE68A;
+  --error: #EF4444;
+  --error-light: #FCA5A5;
+  --info: #3B82F6;
+  --info-light: #93C5FD;
+
+  /* Card Colors */
+  --card-bg: #FFFFFF;
+  --card-border: #E5E7EB;
+}
+
+/* ============================================
+   5. ANIMATION SYSTEM (US-UI-006)
+   ============================================ */
+:root {
+  /* Transition Durations */
+  --transition-fast: 150ms;
+  --transition-base: 200ms;
+  --transition-slow: 300ms;
+  --transition-slower: 500ms;
+
+  /* Easing Functions */
+  --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out: cubic-bezier(0, 0, 0.2, 1);
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+}
+
+/* Skeleton Loading */
+@keyframes skeleton-pulse {
+  0% { background-color: var(--bg-secondary); }
+  50% { background-color: var(--bg-tertiary); }
+  100% { background-color: var(--bg-secondary); }
+}
+
+.skeleton {
+  animation: skeleton-pulse 1.5s ease-in-out infinite;
+  border-radius: var(--radius-sm);
+  background: linear-gradient(90deg, var(--bg-secondary) 25%, var(--bg-tertiary) 50%, var(--bg-secondary) 75%);
+  background-size: 200% 100%;
+}
+
+/* Page Transitions */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-enter {
+  animation: fadeIn var(--transition-base) var(--ease-out);
+}
+
+/* ============================================
+   6. INTERACTION STATES (US-UI-007)
+   ============================================ */
+
+/* Focus States */
+*:focus-visible {
+  outline: 2px solid var(--info);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm);
+}
+
+/* Button Base */
+.btn {
+  min-height: 44px;
+  min-width: 44px;
+  padding: 12px 24px;
+  border-radius: var(--radius-md);
+  font-weight: var(--font-weight-semibold);
+  transition: all var(--transition-fast) var(--ease-in-out);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: none;
+  font-size: var(--font-size-base);
+}
+
+/* Button Hover States */
+.btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Button Active States */
+.btn:active:not(:disabled) {
+  transform: translateY(0);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Button Disabled States */
+.btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+/* Card Interactive States */
+.card {
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-sm);
+  transition: all var(--transition-base) var(--ease-in-out);
+}
+
+.card-interactive {
+  cursor: pointer;
+}
+
+.card-interactive:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.card-interactive:active {
+  transform: translateY(0);
+  box-shadow: var(--shadow-xs);
+}
+
+/* Touch Target Optimization (US-UI-003) */
+.touch-target {
+  position: relative;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.touch-target::before {
+  content: '';
+  position: absolute;
+  inset: -8px;
+  z-index: 0;
+}
+
+/* ============================================
+   7. DARK MODE (US-UI-010)
+   ============================================ */
+[data-theme="dark"] {
+  /* Dark Mode Text Colors */
+  --text-primary: #E0E0E0;
+  --text-secondary: #B0B0B0;
+  --text-muted: #808080;
+  --text-disabled: #606060;
+
+  /* Dark Mode Backgrounds */
+  --bg-primary: #1A1A1A;
+  --bg-secondary: #242424;
+  --bg-tertiary: #2E2E2E;
+
+  /* Dark Mode Cards */
+  --card-bg: #242424;
+  --card-border: #3A3A3A;
+
+  /* Dark Mode Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.4);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.5);
+  --shadow-xl: 0 12px 24px rgba(0, 0, 0, 0.6);
+
+  /* Dark Mode Status Colors */
+  --success: #10B981;
+  --success-light: #065F46;
+  --warning: #F59E0B;
+  --warning-light: #78350F;
+  --error: #EF4444;
+  --error-light: #7F1D1D;
+  --info: #3B82F6;
+  --info-light: #1E3A8A;
+}
+
+/* Smooth Theme Transition */
+* {
+  transition: background-color var(--transition-base) var(--ease-in-out),
+              color var(--transition-base) var(--ease-in-out),
+              border-color var(--transition-base) var(--ease-in-out);
+}
+
+/* ============================================
+   8. RESPONSIVE UTILITIES
+   ============================================ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Mobile Touch Optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .touch-target {
+    min-height: 48px;
+    min-width: 48px;
+  }
+
+  .btn {
+    min-height: 48px;
+  }
+}
