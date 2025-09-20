@@ -139,3 +139,52 @@ As a user selecting emotions, I want the emotion wheel to work exactly as before
 - [ ] Test coverage ≥ 85%
 - [ ] Code review approved
 - [ ] Accessibility audit passed
+
+## Git Commit Guidelines
+
+### Commit After Completion
+**IMPORTANT**: Create a commit immediately after completing this user story.
+
+### Commit Message Format
+```
+<type>(<scope>): <subject>
+
+<body>
+
+Fixes: <story-id>
+```
+
+### Example Commit
+```bash
+git add -A
+git commit -m "refactor(components): extract sub-components and hooks
+
+- Increased placeholder opacity from 0.2 to 0.7
+- Fixed text contrast to meet WCAG AA standards (4.5:1)
+- Added text shadows for better legibility
+- Improved icon visibility with drop shadows
+
+Fixes: US-NEXT-003-refactor-EmotionWheel"
+```
+
+### Commit Types
+- `feat`: New feature
+- `fix`: Bug fix or improvement
+- `refactor`: Code refactoring
+- `style`: CSS/styling changes
+- `docs`: Documentation only
+- `test`: Test additions/changes
+- `perf`: Performance improvements
+
+### Pre-Commit Checklist
+- [ ] All tests passing
+- [ ] Lint checks passed
+- [ ] Visual regression captured
+- [ ] Story acceptance criteria met
+- [ ] Code reviewed (if applicable)
+
+### Push Guidelines
+1. Commit locally first
+2. Run tests: `npm test`
+3. Push to feature branch: `git push origin feature/<story-id>`
+4. Create PR if ready for review
