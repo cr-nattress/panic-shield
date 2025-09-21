@@ -1,14 +1,16 @@
 'use client';
 
 import React from 'react';
-import { Menu, Moon, Sun, Settings } from 'lucide-react';
+import { Menu, Settings } from 'lucide-react';
 import styles from './AppHeader.module.css';
+import ThemeToggle from '@/components/ThemeToggle';
 
 interface AppHeaderProps {
   title?: string;
   subtitle?: string;
   variant?: 'default' | 'minimal' | 'panic';
   onMenuClick?: () => void;
+  onSettingsClick?: () => void;
   hideMenu?: boolean;
   hideSettings?: boolean;
 }
@@ -18,6 +20,7 @@ export default function AppHeader({
   subtitle,
   variant = 'default',
   onMenuClick,
+  onSettingsClick,
   hideMenu = false,
   hideSettings = false
 }: AppHeaderProps) {
@@ -45,17 +48,13 @@ export default function AppHeader({
       <div className={styles.headerRight}>
         {variant !== 'panic' ? (
           <>
-            {/* Theme toggle placeholder - will be replaced in US-HDR-004 */}
-            <button
-              className={styles.iconButton}
-              aria-label="Toggle theme"
-            >
-              <Moon size={20} strokeWidth={2} />
-            </button>
+            {/* US-HDR-004: Theme toggle now in header */}
+            <ThemeToggle />
 
             {!hideSettings && (
               <button
                 className={styles.iconButton}
+                onClick={onSettingsClick}
                 aria-label="Open settings"
               >
                 <Settings size={20} strokeWidth={2} />

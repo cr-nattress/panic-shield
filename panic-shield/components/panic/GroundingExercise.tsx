@@ -1,8 +1,9 @@
 'use client';
 
-import React from 'react';
-import { Eye, Ear, Hand, Wind, Brain, Check } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Eye, Ear, Hand, Wind, Brain, Check, ArrowRight } from 'lucide-react';
 import type { LucideIcon } from 'lucide-react';
+import styles from './GroundingExercise.module.css';
 
 interface GroundingPrompt {
   count: number;
@@ -35,18 +36,31 @@ export default function GroundingExercise({
   onSkip
 }: GroundingExerciseProps) {
   const currentPrompt = GROUNDING_PROMPTS[currentStep];
-  const CurrentIcon = currentPrompt.icon;
+  const CurrentIcon = currentPrompt?.icon;
   const isComplete = currentStep >= GROUNDING_PROMPTS.length;
+  const [showCelebration, setShowCelebration] = useState(false);
+
+  // Check if current step is fully filled
+  const currentStepInputs = inputs[currentStep] || [];
+  const allFieldsFilled = currentPrompt && currentStepInputs.filter(Boolean).length === currentPrompt.count;
+
+  // Trigger celebration when exercise completes
+  useEffect(() => {
+    if (isComplete && !showCelebration) {
+      setShowCelebration(true);
+      setTimeout(() => setShowCelebration(false), 1000);
+    }
+  }, [isComplete, showCelebration]);
 
   if (isComplete) {
     return (
-      <div className="grounding-container">
+      <div className={styles.groundingContainer}>
         <h2>Well Done!</h2>
-        <div className="grounding-complete">
-          <Check size={48} className="success-icon" />
+        <div className={`${styles.groundingComplete} ${showCelebration ? styles.celebrateSuccess : ''}`}>
+          <Check size={48} className={styles.successIcon} />
           <p>You've successfully anchored yourself in the present moment.</p>
           <p>Your senses are powerful tools for managing anxiety.</p>
-          <button onClick={onComplete} className="btn-primary">
+          <button onClick={onComplete} className={styles.btnPrimary}>
             Finish Exercise
           </button>
         </div>
@@ -67,41 +81,69 @@ export default function GroundingExercise({
   };
 
   return (
-    <div className="grounding-container">
+    <div className={styles.groundingContainer}>
       <h2>5-4-3-2-1 Grounding</h2>
-      <p className="grounding-intro">Focus on your senses to anchor yourself in the present</p>
+      <p className={styles.groundingIntro}>Focus on your senses to anchor yourself in the present</p>
 
-      <div className="grounding-step">
-        <div className="step-header">
-          <CurrentIcon size={32} className="sense-icon" />
-          <h3>{currentPrompt.prompt}</h3>
+      <div className={styles.groundingStep}>
+        <div className={styles.stepHeader}>
+          <CurrentIcon size={32} className={styles.senseIcon} />
+          <div>
+            <h3>{currentPrompt.prompt}</h3>
+            <p className={styles.stepLabel}>Step {currentStep + 1} of {GROUNDING_PROMPTS.length}</p>
+          </div>
         </div>
 
-        <div className="grounding-inputs">
-          {Array.from({ length: currentPrompt.count }).map((_, index) => (
-            <input
-              key={`${currentStep}-${index}`}
-              type="text"
-              placeholder={`${currentPrompt.sense} ${index + 1}...`}
-              value={inputs[currentStep]?.[index] || ''}
-              onChange={(e) => handleInput(index, e.target.value)}
-              className="grounding-input"
-              autoFocus={index === 0}
-            />
-          ))}
+        <div className={styles.groundingInputs}>
+          {Array.from({ length: currentPrompt.count }).map((_, index) => {
+            const inputValue = inputs[currentStep]?.[index] || '';
+            const isCompleted = inputValue.trim().length > 0;
+
+            return (
+              <div key={`${currentStep}-${index}`} style={{ position: 'relative' }}>
+                <input
+                  type="text"
+                  placeholder={`${currentPrompt.sense} ${index + 1}...`}
+                  value={inputValue}
+                  onChange={(e) => handleInput(index, e.target.value)}
+                  className={`${styles.groundingInput} ${isCompleted ? styles.completed : ''}`}
+                  autoFocus={index === 0}
+                />
+                {isCompleted && (
+                  <span className={styles.inputCheckmark}>✓</span>
+                )}
+              </div>
+            );
+          })}
         </div>
 
-        <div className="step-progress">
+        <div className={styles.stepProgress}>
           {GROUNDING_PROMPTS.map((_, i) => (
             <div
               key={i}
-              className={`progress-dot ${i <= currentStep ? 'active' : ''}`}
+              className={`${styles.progressDot} ${
+                i < currentStep ? styles.completed :
+                i === currentStep ? styles.active : ''
+              }`}
+              title={`Step ${i + 1}: ${GROUNDING_PROMPTS[i].prompt}`}
             />
           ))}
         </div>
 
-        {currentStep > 0 && (
-          <button onClick={onSkip} className="skip-btn">
+        {/* Continue button when all fields are filled */}
+        {allFieldsFilled && currentStep < GROUNDING_PROMPTS.length - 1 && (
+          <button
+            onClick={() => onInputChange(currentStep + 1, -1, '')}
+            className={styles.continueBtn}
+          >
+            Continue to Step {currentStep + 2}
+            <ArrowRight size={20} />
+          </button>
+        )}
+
+        {/* Skip button (only show if continue isn't shown) */}
+        {!allFieldsFilled && currentStep > 0 && (
+          <button onClick={onSkip} className={styles.skipBtn}>
             Skip to next step
           </button>
         )}

@@ -16,8 +16,12 @@ export default function BottomNav({ currentPage, onNavigate }: BottomNavProps) {
     { id: 'trends', label: 'Trends', icon: TrendingUp },
   ];
 
+  // Hide bottom nav in panic mode to avoid navigation issues
+  // EP-006: US-GND-002 - Ensure navigation is visible when needed
+  const shouldHideNav = currentPage === 'panic';
+
   return (
-    <div className="bottom-nav">
+    <div className={`bottom-nav ${shouldHideNav ? 'hidden-in-panic' : ''}`}>
       {navItems.map(({ id, label, icon: Icon, danger }) => (
         <button
           key={id}

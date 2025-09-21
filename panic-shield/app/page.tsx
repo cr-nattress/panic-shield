@@ -9,10 +9,12 @@ import AchievementsPage from '@/components/AchievementsPageRefactored';
 import BottomNav from '@/components/BottomNav';
 import AppHeader from '@/components/header/AppHeader';
 import MenuDrawer from '@/components/header/MenuDrawer';
+import SettingsModal from '@/components/SettingsModal';
 
 export default function EmotionWheelApp() {
   const [currentPage, setCurrentPage] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
 
   // Get subtitle based on current page
   const getPageSubtitle = (page: string) => {
@@ -32,6 +34,7 @@ export default function EmotionWheelApp() {
         subtitle={getPageSubtitle(currentPage)}
         variant={currentPage === 'panic' ? 'panic' : 'default'}
         onMenuClick={() => setMenuOpen(true)}
+        onSettingsClick={() => setSettingsOpen(true)}
       />
 
       <MenuDrawer
@@ -49,6 +52,9 @@ export default function EmotionWheelApp() {
       </main>
 
       <BottomNav currentPage={currentPage} onNavigate={setCurrentPage} />
+
+      {/* US-HDR-005: Settings modal accessible from header */}
+      {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)} />}
     </div>
   );
 }

@@ -1,0 +1,687 @@
+/* Grounding Exercise Module Styles */
+/* EP-006: US-GND-001 - Fix text contrast and visibility */
+
+/* US-GND-008: Entrance animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.groundingContainer {
+  width: 100%;
+  max-width: 600px;
+  margin: 16px auto;
+  padding: 24px 20px; /* US-GND-003: Proper card padding */
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  animation: fadeInUp 0.6s ease-out; /* US-GND-008: Smooth entrance */
+}
+
+/* High contrast text for readability */
+.groundingContainer h2 {
+  color: #1a1a1a;
+  /* US-GND-009: Responsive font scaling */
+  font-size: clamp(1.5rem, 4vw, 1.75rem);
+  font-weight: 700;
+  margin-bottom: 24px; /* US-GND-003: Proper title spacing */
+  text-align: center;
+  line-height: 1.4;
+}
+
+.groundingIntro {
+  color: #4a4a4a;
+  /* US-GND-009: Responsive font scaling */
+  font-size: clamp(0.875rem, 2.5vw, 1rem);
+  text-align: center;
+  margin-bottom: 32px; /* US-GND-003: Section separation */
+  line-height: 1.5;
+}
+
+.groundingStep {
+  margin-bottom: 32px; /* US-GND-003: Section spacing */
+}
+
+.stepHeader {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #f8f9fa;
+  border-radius: 12px;
+}
+
+/* US-GND-008: Breathing animation for calming effect */
+@keyframes gentleBreath {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 1;
+  }
+}
+
+.senseIcon {
+  color: #3b82f6;
+  flex-shrink: 0;
+  animation: gentleBreath 4s ease-in-out infinite; /* US-GND-008: Breathing hint */
+}
+
+.stepHeader h3 {
+  color: #1a1a1a;
+  /* US-GND-009: Responsive font scaling */
+  font-size: clamp(1.125rem, 3vw, 1.25rem);
+  font-weight: 600;
+  margin: 0;
+}
+
+/* US-GND-006: Step label for progress context */
+.stepLabel {
+  color: #6b7280;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+/* Input fields with improved spacing and visibility */
+.groundingInputs {
+  display: flex;
+  flex-direction: column;
+  gap: 16px; /* US-GND-003: Minimum 16px gap between inputs */
+  margin-bottom: 24px;
+}
+
+/* US-GND-008: Staggered entrance for inputs */
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.groundingInputs > div {
+  animation: slideInFromRight 0.4s ease-out backwards;
+}
+
+.groundingInputs > div:nth-child(1) { animation-delay: 0.1s; }
+.groundingInputs > div:nth-child(2) { animation-delay: 0.2s; }
+.groundingInputs > div:nth-child(3) { animation-delay: 0.3s; }
+.groundingInputs > div:nth-child(4) { animation-delay: 0.4s; }
+.groundingInputs > div:nth-child(5) { animation-delay: 0.5s; }
+
+.groundingInput {
+  width: 100%;
+  padding: 16px 20px; /* US-GND-004: Proper padding for touch */
+  background: #ffffff;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  color: #1a1a1a;
+  /* US-GND-009: Responsive font with iOS zoom prevention */
+  font-size: clamp(1rem, 2.5vw, 1.125rem);
+  font-weight: 500;
+  min-height: 56px; /* US-GND-004: Touch-friendly height */
+  /* US-GND-008: Enhanced smooth transitions */
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition-property: transform, border-color, background-color, box-shadow;
+  -webkit-appearance: none;
+  appearance: none;
+  touch-action: manipulation; /* US-GND-004: Better touch handling */
+}
+
+.groundingInput:focus {
+  outline: none;
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  background: #f0f9ff; /* US-GND-005: Visual focus feedback */
+  transform: translateY(-1px);
+  transition: all 0.2s ease;
+}
+
+/* US-GND-005: Enhanced keyboard focus visibility */
+.groundingInput:focus-visible {
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+.groundingInput::placeholder {
+  color: #9ca3af;
+  opacity: 1;
+}
+
+/* US-GND-004: Touch feedback */
+.groundingInput:active {
+  transform: scale(0.98);
+}
+
+/* US-GND-005: Visual feedback when input has value */
+.groundingInput:not(:placeholder-shown) {
+  background: #f0fdf4;
+  border-color: #86efac;
+  font-weight: 500;
+}
+
+/* US-GND-007: Completed input visual feedback */
+.groundingInput.completed {
+  background: rgba(76, 175, 80, 0.08);
+  border-color: rgba(76, 175, 80, 0.6);
+  position: relative;
+  padding-right: 48px; /* Make room for checkmark */
+}
+
+/* US-GND-007: Checkmark for completed inputs */
+.inputCheckmark {
+  position: absolute;
+  right: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: rgba(76, 175, 80, 0.8);
+  font-size: 20px;
+  animation: checkmarkPop 0.3s ease;
+  pointer-events: none;
+}
+
+@keyframes checkmarkPop {
+  0% {
+    transform: translateY(-50%) scale(0);
+    opacity: 0;
+  }
+  60% {
+    transform: translateY(-50%) scale(1.2);
+  }
+  100% {
+    transform: translateY(-50%) scale(1);
+    opacity: 1;
+  }
+}
+
+/* US-GND-005: Enhanced hover states for desktop */
+@media (hover: hover) {
+  .groundingInput:hover:not(:focus) {
+    background: #f9fafb;
+    border-color: #9ca3af;
+    transform: translateY(-1px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease;
+  }
+}
+
+/* Touch-friendly buttons */
+.skipBtn {
+  min-height: 56px; /* US-GND-004: Increased touch target */
+  padding: 16px 32px; /* US-GND-004: Proper button padding */
+  background: transparent;
+  border: 2px solid #d1d5db;
+  border-radius: 12px;
+  color: #6b7280;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  width: 100%;
+  margin-top: 16px;
+  position: relative;
+  touch-action: manipulation;
+}
+
+/* US-GND-007: Continue button states */
+.continueBtn {
+  min-height: 56px;
+  padding: 16px 32px;
+  background: #3b82f6;
+  border: 2px solid #3b82f6;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  width: 100%;
+  margin-top: 16px;
+  position: relative;
+  touch-action: manipulation;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.continueBtn:disabled {
+  background: rgba(107, 114, 128, 0.1);
+  border-color: #e5e7eb;
+  color: #9ca3af;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.continueBtn:not(:disabled) {
+  animation: readyPulse 1s ease;
+}
+
+.continueBtn:not(:disabled):hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.continueBtn:not(:disabled):active {
+  transform: scale(0.98);
+}
+
+@keyframes readyPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+/* US-GND-004: Invisible touch area extension */
+.skipBtn::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+}
+
+.skipBtn:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  color: #4b5563;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.skipBtn:active {
+  transform: scale(0.98);
+}
+
+/* US-GND-005: Focus states for skip button */
+.skipBtn:focus-visible {
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* US-GND-006: Enhanced progress indicators */
+.stepProgress {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 24px;
+  padding: 16px;
+  background: #f9fafb;
+  border-radius: 12px;
+  position: relative;
+}
+
+.progressDot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  transition: all 0.3s ease;
+  position: relative;
+  cursor: default;
+}
+
+/* US-GND-006: Active step with animation */
+.progressDot.active {
+  background: #3b82f6;
+  transform: scale(1.3);
+  box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  animation: pulse 2s infinite;
+}
+
+/* US-GND-006: Completed steps */
+.progressDot.completed {
+  background: #10b981;
+  position: relative;
+}
+
+.progressDot.completed::after {
+  content: '✓';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  font-size: 8px;
+  font-weight: bold;
+}
+
+/* US-GND-008: Enhanced pulse animation for active step */
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1.3);
+    opacity: 1;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.2);
+  }
+  50% {
+    transform: scale(1.5);
+    opacity: 0.8;
+    box-shadow: 0 0 0 8px rgba(59, 130, 246, 0.1);
+  }
+}
+
+/* Completion state */
+.groundingComplete {
+  text-align: center;
+  padding: 32px 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* US-GND-007: Success wave animation */
+.groundingComplete.celebrateSuccess::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(76, 175, 80, 0.15),
+    transparent
+  );
+  animation: successWave 0.8s ease forwards;
+}
+
+@keyframes successWave {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+.successIcon {
+  color: #10b981;
+  margin-bottom: 24px;
+  animation: successBounce 0.6s ease;
+}
+
+@keyframes successBounce {
+  0% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* US-GND-007: Step completion celebration */
+.stepComplete {
+  animation: stepSuccess 0.5s ease;
+}
+
+@keyframes stepSuccess {
+  0% {
+    background-color: inherit;
+  }
+  50% {
+    background-color: rgba(76, 175, 80, 0.1);
+  }
+  100% {
+    background-color: inherit;
+  }
+}
+
+.groundingComplete p {
+  color: #4b5563;
+  font-size: 18px;
+  line-height: 1.6;
+  margin-bottom: 16px;
+}
+
+.btnPrimary {
+  min-height: 56px; /* US-GND-004: Touch-friendly height */
+  padding: 16px 32px; /* US-GND-004: Generous padding */
+  background: #3b82f6;
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 24px;
+  position: relative;
+  touch-action: manipulation;
+}
+
+/* US-GND-004: Extended touch area for primary button */
+.btnPrimary::before {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  right: -8px;
+  bottom: -8px;
+}
+
+.btnPrimary:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.btnPrimary:active {
+  transform: scale(0.98);
+}
+
+/* US-GND-005: Focus state for primary button */
+.btnPrimary:focus-visible {
+  outline: 3px solid #fbbf24;
+  outline-offset: 2px;
+}
+
+/* US-GND-008: Page transition animation */
+@keyframes pageTransition {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.groundingStep {
+  animation: pageTransition 0.4s ease-out;
+}
+
+/* Accessibility improvements */
+@media (prefers-reduced-motion: reduce) {
+  /* US-GND-008: Respect motion preferences */
+  .groundingContainer,
+  .groundingInputs > div,
+  .groundingInput,
+  .skipBtn,
+  .continueBtn,
+  .progressDot,
+  .btnPrimary,
+  .senseIcon,
+  .groundingStep,
+  .successIcon {
+    animation: none !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .groundingContainer {
+    background: white;
+    border: 2px solid black;
+  }
+
+  .groundingInput {
+    border-width: 3px;
+  }
+
+  .groundingContainer h2,
+  .stepHeader h3 {
+    color: black;
+  }
+}
+
+/* US-GND-009: Responsive Layout Breakpoints */
+
+/* Small phones (320px - 375px) */
+@media (max-width: 375px) {
+  .groundingContainer {
+    padding: 16px 12px;
+    margin: 8px auto;
+  }
+
+  .groundingInput {
+    padding: 12px 16px;
+    min-height: 48px;
+  }
+
+  .stepHeader {
+    padding: 12px;
+  }
+
+  .senseIcon {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Tablets (768px - 1024px) */
+@media (min-width: 768px) {
+  .groundingContainer {
+    padding: 32px 28px;
+    max-width: 720px;
+  }
+
+  .groundingInputs {
+    gap: 20px;
+  }
+
+  .groundingInput {
+    padding: 18px 24px;
+    min-height: 60px;
+  }
+
+  .stepHeader {
+    padding: 20px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .groundingContainer {
+    max-width: 800px;
+    padding: 40px 36px;
+  }
+
+  .groundingIntro {
+    margin-bottom: 40px;
+  }
+
+  .groundingStep {
+    margin-bottom: 40px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 600px) {
+  .groundingContainer {
+    padding: 16px 20px;
+    margin: 8px auto;
+  }
+
+  .groundingInput {
+    min-height: 44px;
+    padding: 10px 16px;
+  }
+
+  .groundingInputs {
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stepProgress {
+    padding: 12px;
+    margin-top: 16px;
+  }
+
+  .groundingIntro {
+    margin-bottom: 20px;
+  }
+}
+
+/* Tablet landscape optimization */
+@media (min-width: 768px) and (orientation: landscape) {
+  /* Grid layout for 5 inputs */
+  .groundingInputs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+  }
+
+  /* For 5 items, make the last one span full width */
+  .groundingInputs > div:nth-child(5):last-child {
+    grid-column: 1 / -1;
+  }
+
+  /* For 4 items, use 2x2 grid */
+  .groundingInputs:has(> div:nth-child(4):last-child) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* For 3 items, use 3 columns */
+  .groundingInputs:has(> div:nth-child(3):last-child) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* For 2 items, use 2 columns */
+  .groundingInputs:has(> div:nth-child(2):last-child) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* Ultra-wide screens (2560px+) */
+@media (min-width: 2560px) {
+  .groundingContainer {
+    max-width: 1000px;
+    padding: 48px 40px;
+  }
+
+  .groundingContainer h2 {
+    font-size: 2rem;
+  }
+
+  .groundingIntro {
+    font-size: 1.125rem;
+  }
+
+  .groundingInput {
+    font-size: 1.25rem;
+    min-height: 64px;
+  }
+}

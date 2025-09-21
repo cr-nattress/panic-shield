@@ -1,10 +1,8 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
-import { Settings, Shield, Edit3, AlertCircle, TrendingUp, Trophy, Flame } from 'lucide-react';
+import React, { useMemo } from 'react';
+import { Shield, Edit3, AlertCircle, TrendingUp, Trophy, Flame } from 'lucide-react';
 import { useStore } from '@/contexts/StoreContext';
-import ThemeToggle from './ThemeToggle';
-import SettingsModal from './SettingsModal';
 import { calculateStreak, getStreakMessage } from '@/utils/gamification';
 
 interface HomePageProps {
@@ -13,7 +11,6 @@ interface HomePageProps {
 
 export default function HomePage({ onNavigate }: HomePageProps) {
   const { logs } = useStore();
-  const [settingsOpen, setSettingsOpen] = useState(false);
 
   const streak = useMemo(() => calculateStreak(logs), [logs]);
 
@@ -21,12 +18,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
     <div className="page home-page page-enter">
       <div className="header">
         <h1 className="heading-1">How are you?</h1>
-        <div className="header-actions">
-          <ThemeToggle />
-          <button onClick={() => setSettingsOpen(true)} className="icon-btn touch-target">
-            <Settings size={20} strokeWidth={2} />
-          </button>
-        </div>
+        {/* US-HDR-005: Settings moved to AppHeader */}
       </div>
 
       {/* Streak Banner */}
@@ -83,7 +75,7 @@ export default function HomePage({ onNavigate }: HomePageProps) {
         <p className="body-text"><strong>Privacy First:</strong> All data stays on your device. No accounts, no tracking.</p>
       </div>
 
-      {settingsOpen && <SettingsModal onClose={() => setSettingsOpen(false)} />}
+      {/* Settings modal moved to main app */}
     </div>
   );
 }
