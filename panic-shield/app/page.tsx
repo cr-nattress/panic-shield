@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import HomePage from '@/components/HomePage';
 import LogPage from '@/components/LogPage';
 import PanicPage from '@/components/PanicPageRefactored';
@@ -15,6 +15,14 @@ export default function EmotionWheelApp() {
   const [currentPage, setCurrentPage] = useState('home');
   const [menuOpen, setMenuOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
+  const [isFullScreen, setIsFullScreen] = useState(false);
+
+  // US-HDR-008: Handle full-screen mode for exercises
+  useEffect(() => {
+    // Check if we're in a breathing or grounding exercise
+    const isExerciseActive = document.querySelector('.breathing-container, .groundingContainer');
+    setIsFullScreen(!!isExerciseActive);
+  }, [currentPage]);
 
   // Get subtitle based on current page
   const getPageSubtitle = (page: string) => {
@@ -28,14 +36,43 @@ export default function EmotionWheelApp() {
     return subtitles[page] || '';
   };
 
+  // US-HDR-008: Determine if header should be shown
+  const shouldShowHeader = !isFullScreen || currentPage !== 'panic';
+
+  // US-HDR-011: Keyboard shortcuts
+  useEffect(() => {
+    const handleKeyPress = (e: KeyboardEvent) => {
+      // Alt+M for menu
+      if (e.altKey && e.key === 'm') {
+        e.preventDefault();
+        setMenuOpen(prev => !prev);
+      }
+      // Alt+S for settings
+      if (e.altKey && e.key === 's') {
+        e.preventDefault();
+        setSettingsOpen(prev => !prev);
+      }
+    };
+
+    window.addEventListener('keydown', handleKeyPress);
+    return () => window.removeEventListener('keydown', handleKeyPress);
+  }, []);
+
   return (
     <div className="app">
-      <AppHeader
-        subtitle={getPageSubtitle(currentPage)}
-        variant={currentPage === 'panic' ? 'panic' : 'default'}
-        onMenuClick={() => setMenuOpen(true)}
-        onSettingsClick={() => setSettingsOpen(true)}
-      />
+      {/* US-HDR-011: Skip navigation link */}
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
+
+      {shouldShowHeader && (
+        <AppHeader
+          subtitle={getPageSubtitle(currentPage)}
+          variant={currentPage === 'panic' ? 'panic' : 'default'}
+          onMenuClick={() => setMenuOpen(true)}
+          onSettingsClick={() => setSettingsOpen(true)}
+        />
+      )}
 
       <MenuDrawer
         isOpen={menuOpen}
@@ -43,7 +80,7 @@ export default function EmotionWheelApp() {
         currentPage={currentPage}
       />
 
-      <main className="app-content">
+      <main className="app-content" id="main-content" role="main">
         {currentPage === 'home' && <HomePage onNavigate={setCurrentPage} />}
         {currentPage === 'log' && <LogPage onNavigate={setCurrentPage} />}
         {currentPage === 'panic' && <PanicPage onNavigate={setCurrentPage} />}

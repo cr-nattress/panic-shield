@@ -1,3 +1,4 @@
+/* US-HDR-010: Enhanced header with animations */
 .appHeader {
   position: sticky;
   top: 0;
@@ -11,7 +12,30 @@
   -webkit-backdrop-filter: blur(10px);
   border-bottom: 1px solid var(--border);
   z-index: 100;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideDown 0.4s ease-out;
+}
+
+/* US-HDR-010: Shadow on scroll */
+.appHeader.scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  background: var(--header-bg-solid, rgba(255, 255, 255, 0.98));
+}
+
+:global(.dark) .appHeader.scrolled {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* US-HDR-010: Entrance animation */
+@keyframes slideDown {
+  from {
+    transform: translateY(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 /* Dark mode support */
@@ -57,7 +81,7 @@
   line-height: 1;
 }
 
-/* Buttons */
+/* US-HDR-010: Enhanced buttons with animations */
 .menuButton,
 .iconButton {
   display: flex;
@@ -71,18 +95,54 @@
   border-radius: 8px;
   color: var(--text);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   touch-action: manipulation;
+  position: relative;
+  overflow: hidden;
 }
 
 .menuButton:hover,
 .iconButton:hover {
   background: var(--secondary);
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .menuButton:active,
 .iconButton:active {
   transform: scale(0.95);
+  transition-duration: 0.05s;
+}
+
+/* US-HDR-010: Ripple effect */
+.rippleEffect {
+  position: relative;
+  overflow: hidden;
+}
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transform: scale(0);
+  animation: rippleAnimation 0.6s ease-out;
+  pointer-events: none;
+}
+
+@keyframes rippleAnimation {
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
+
+/* US-HDR-010: Settings icon rotation on hover */
+.rotateOnHover {
+  transition: transform 0.3s ease;
+}
+
+.iconButton:hover .rotateOnHover {
+  transform: rotate(90deg);
 }
 
 /* Minimal variant */
@@ -132,28 +192,60 @@
   background: rgba(255, 255, 255, 0.3);
 }
 
+/* US-HDR-007: Enhanced panic mode controls */
+.closeExerciseBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  min-width: 80px;
+  height: 44px;
+  padding: 10px 16px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.6);
+  border-radius: 22px;
+  color: white;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.closeExerciseBtn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  border-color: white;
+  transform: translateY(-1px);
+}
+
+.closeExerciseBtn:active {
+  transform: scale(0.98);
+}
+
 /* Emergency call button for panic mode */
 .emergencyCall {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
-  min-width: 100px;
-  height: 40px;
-  padding: 8px 20px;
-  background: rgba(255, 255, 255, 0.3);
+  min-width: 110px;
+  height: 44px;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.35);
   border: 2px solid white;
-  border-radius: 20px;
+  border-radius: 22px;
   color: white;
   text-decoration: none;
   font-weight: 600;
   transition: all 0.2s ease;
   animation: pulse 2s infinite;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
 }
 
 .emergencyCall:hover {
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.45);
   transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
 }
 
 .emergencyCall:active {
@@ -178,14 +270,49 @@
   }
 }
 
-/* Responsive adjustments */
-@media (max-width: 380px) {
+/* US-HDR-012: Enhanced Responsive Design */
+
+/* Small phones (320px - 374px) */
+@media (max-width: 374px) {
+  .appHeader {
+    padding: 0 8px;
+    height: 52px;
+  }
+
+  .headerTitle {
+    font-size: 15px;
+  }
+
+  .headerSubtitle {
+    font-size: 10px;
+  }
+
+  .menuButton,
+  .iconButton {
+    width: 38px;
+    height: 38px;
+    padding: 6px;
+  }
+
+  .emergencyCall {
+    min-width: 80px;
+    height: 36px;
+    padding: 6px 12px;
+  }
+
+  .emergencyText {
+    font-size: 14px;
+  }
+}
+
+/* Standard phones (375px - 479px) */
+@media (min-width: 375px) and (max-width: 479px) {
   .appHeader {
     padding: 0 12px;
   }
 
   .headerTitle {
-    font-size: 16px;
+    font-size: 17px;
   }
 
   .headerSubtitle {
@@ -194,8 +321,124 @@
 
   .menuButton,
   .iconButton {
-    width: 40px;
-    height: 40px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+/* Large phones & small tablets (480px - 767px) */
+@media (min-width: 480px) and (max-width: 767px) {
+  .appHeader {
+    padding: 0 20px;
+    height: 60px;
+  }
+
+  .headerTitle {
+    font-size: 20px;
+  }
+
+  .headerSubtitle {
+    font-size: 13px;
+  }
+
+  .menuButton,
+  .iconButton {
+    width: 48px;
+    height: 48px;
+  }
+
+  .headerLeft,
+  .headerRight {
+    gap: 12px;
+  }
+}
+
+/* Tablets (768px - 1023px) */
+@media (min-width: 768px) {
+  .appHeader {
+    padding: 0 24px;
+    height: 64px;
+    max-width: 1024px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .headerTitle {
+    font-size: 22px;
+  }
+
+  .headerSubtitle {
+    font-size: 14px;
+  }
+
+  .menuButton,
+  .iconButton {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+  }
+
+  .menuButton:hover,
+  .iconButton:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  }
+
+  .emergencyCall {
+    min-width: 120px;
+    height: 44px;
+    padding: 10px 24px;
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  .appHeader {
+    height: 72px;
+    padding: 0 32px;
+  }
+
+  .headerTitle {
+    font-size: 24px;
+  }
+
+  .headerSubtitle {
+    font-size: 15px;
+  }
+
+  .headerCenter {
+    max-width: 600px;
+  }
+}
+
+/* Landscape orientation adjustments */
+@media (orientation: landscape) and (max-height: 500px) {
+  .appHeader {
+    height: 48px;
+  }
+
+  .headerTitle {
+    font-size: 16px;
+  }
+
+  .headerSubtitle {
+    display: none;
+  }
+
+  .menuButton,
+  .iconButton {
+    width: 36px;
+    height: 36px;
+  }
+}
+
+/* High DPI screens */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .appHeader {
+    border-bottom-width: 0.5px;
+  }
+
+  .appHeader.panic {
+    border-bottom-width: 1px;
   }
 }
 

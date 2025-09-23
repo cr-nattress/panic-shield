@@ -14,6 +14,8 @@ import {
 } from 'lucide-react';
 import styles from './MenuDrawer.module.css';
 import { useStore } from '@/contexts/StoreContext';
+import { calculateUserStats, calculateStreak, getStreakMessage } from '@/utils/gamification';
+import { EMOTION_CORES, SUB_EMOTIONS } from '@/utils/emotionDataEnhanced';
 
 interface MenuDrawerProps {
   isOpen: boolean;
@@ -27,9 +29,13 @@ export default function MenuDrawer({
   currentPage
 }: MenuDrawerProps) {
   const drawerRef = useRef<HTMLDivElement>(null);
-  const { logs } = useStore();
+  const { logs, achievements } = useStore();
 
-  // Calculate simple stats (will be enhanced in US-HDR-006)
+  // US-HDR-006: Calculate comprehensive user stats
+  const userStats = calculateUserStats(logs);
+  const streakData = calculateStreak(logs);
+
+  // Calculate weekly logs
   const weeklyLogs = logs.filter(log => {
     const logDate = new Date(log.timestamp);
     const weekAgo = new Date();
@@ -37,7 +43,46 @@ export default function MenuDrawer({
     return logDate > weekAgo;
   }).length;
 
-  const currentStreak = 2; // Hardcoded for now, will be calculated in US-HDR-006
+  // Calculate most frequent emotion in the past week
+  const recentLogs = logs.filter(log => {
+    const logDate = new Date(log.timestamp);
+    const weekAgo = new Date();
+    weekAgo.setDate(weekAgo.getDate() - 7);
+    return logDate > weekAgo;
+  });
+
+  const emotionFrequency = new Map<string, number>();
+  recentLogs.forEach(log => {
+    if (log.emotionId) {
+      emotionFrequency.set(log.emotionId, (emotionFrequency.get(log.emotionId) || 0) + 1);
+    }
+  });
+
+  let mostFrequentEmotion = 'Balanced';
+  let maxCount = 0;
+  emotionFrequency.forEach((count, emotionId) => {
+    if (count > maxCount) {
+      maxCount = count;
+      // Find emotion name from cores or sub-emotions
+      const coreEmotion = EMOTION_CORES.find(e => e.id === emotionId);
+      if (coreEmotion) {
+        mostFrequentEmotion = coreEmotion.name;
+      } else {
+        const subEmotion = SUB_EMOTIONS.find(e => e.id === emotionId);
+        if (subEmotion) {
+          mostFrequentEmotion = subEmotion.name;
+        }
+      }
+    }
+  });
+
+  // Calculate average intensity
+  const avgIntensity = recentLogs.length > 0
+    ? Math.round(recentLogs.reduce((sum, log) => sum + (log.intensity || 0), 0) / recentLogs.length)
+    : 0;
+
+  // Determine emotional trend
+  const emotionalTrend = avgIntensity <= 3 ? 'Calm' : avgIntensity <= 6 ? 'Moderate' : 'Intense';
 
   // Handle escape key
   useEffect(() => {
@@ -132,27 +177,44 @@ export default function MenuDrawer({
             <div className={styles.profileInfo}>
               <h3 className={styles.profileName}>Guest User</h3>
               <div className={styles.streak}>
-                <Flame size={16} />
-                <span>{currentStreak} day streak</span>
+                <Flame size={16} className={streakData.fireLevel !== 'none' ? styles[`fire${streakData.fireLevel}`] : ''} />
+                <span>{streakData.current} day streak</span>
               </div>
+              <p className={styles.streakMessage}>{getStreakMessage(streakData.current)}</p>
             </div>
           </div>
 
-          {/* Quick Stats Section */}
+          {/* US-HDR-006: Enhanced Quick Stats Section */}
           <div className={styles.statsSection}>
             <h4 className={styles.sectionTitle}>Quick Stats</h4>
             <div className={styles.statsList}>
               <div className={styles.statItem}>
                 <span className={styles.statIcon}>📊</span>
-                <span className={styles.statText}>{weeklyLogs} logs this week</span>
+                <div className={styles.statContent}>
+                  <span className={styles.statText}>{weeklyLogs} logs this week</span>
+                  <span className={styles.statSubtext}>Avg: {userStats.weeklyAverage}/week</span>
+                </div>
               </div>
               <div className={styles.statItem}>
-                <span className={styles.statIcon}>😊</span>
-                <span className={styles.statText}>Mostly positive</span>
+                <span className={styles.statIcon}>🎭</span>
+                <div className={styles.statContent}>
+                  <span className={styles.statText}>Mostly {mostFrequentEmotion.toLowerCase()}</span>
+                  <span className={styles.statSubtext}>{emotionalTrend} intensity</span>
+                </div>
               </div>
               <div className={styles.statItem}>
-                <span className={styles.statIcon}>📈</span>
-                <span className={styles.statText}>Improving trend</span>
+                <span className={styles.statIcon}>🏆</span>
+                <div className={styles.statContent}>
+                  <span className={styles.statText}>{achievements.length} achievements</span>
+                  <span className={styles.statSubtext}>{userStats.daysActive} days active</span>
+                </div>
+              </div>
+              <div className={styles.statItem}>
+                <span className={styles.statIcon}>📝</span>
+                <div className={styles.statContent}>
+                  <span className={styles.statText}>{userStats.totalLogs} total logs</span>
+                  <span className={styles.statSubtext}>{userStats.emotionalRange} unique emotions</span>
+                </div>
               </div>
             </div>
           </div>
@@ -212,22 +274,56 @@ export default function MenuDrawer({
             </button>
           </nav>
 
-          {/* Emergency Contacts Section */}
+          {/* US-HDR-009: Enhanced Emergency Contacts Section */}
           <div className={styles.emergencySection}>
             <h4 className={styles.sectionTitle}>Emergency Support</h4>
             <a
               href="tel:988"
               className={`${styles.emergencyItem} ${styles.crisis}`}
+              aria-label="Call Crisis Hotline at 988"
             >
               <Phone size={20} />
-              <span>Crisis Hotline (988)</span>
+              <div className={styles.emergencyContent}>
+                <span className={styles.emergencyTitle}>Crisis Hotline</span>
+                <span className={styles.emergencyNumber}>988</span>
+                <span className={styles.emergencyDescription}>24/7 suicide & crisis support</span>
+              </div>
             </a>
             <a
               href="tel:911"
               className={styles.emergencyItem}
+              aria-label="Call Emergency Services at 911"
             >
               <AlertCircle size={20} />
-              <span>Emergency (911)</span>
+              <div className={styles.emergencyContent}>
+                <span className={styles.emergencyTitle}>Emergency</span>
+                <span className={styles.emergencyNumber}>911</span>
+                <span className={styles.emergencyDescription}>Immediate danger or medical emergency</span>
+              </div>
+            </a>
+            <a
+              href="tel:1-800-273-8255"
+              className={styles.emergencyItem}
+              aria-label="Call National Suicide Prevention Lifeline"
+            >
+              <Phone size={20} />
+              <div className={styles.emergencyContent}>
+                <span className={styles.emergencyTitle}>Prevention Lifeline</span>
+                <span className={styles.emergencyNumber}>1-800-273-8255</span>
+                <span className={styles.emergencyDescription}>Alternative crisis support line</span>
+              </div>
+            </a>
+            <a
+              href="sms:741741?body=HELLO"
+              className={styles.emergencyItem}
+              aria-label="Text Crisis Text Line at 741741"
+            >
+              <AlertCircle size={20} />
+              <div className={styles.emergencyContent}>
+                <span className={styles.emergencyTitle}>Crisis Text Line</span>
+                <span className={styles.emergencyNumber}>Text HOME to 741741</span>
+                <span className={styles.emergencyDescription}>24/7 text support</span>
+              </div>
             </a>
           </div>
         </div>

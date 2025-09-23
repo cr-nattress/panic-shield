@@ -1,7 +1,7 @@
 'use client';
 
-import React from 'react';
-import { Menu, Settings } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import { Menu, Settings, X, Phone } from 'lucide-react';
 import styles from './AppHeader.module.css';
 import ThemeToggle from '@/components/ThemeToggle';
 
@@ -24,24 +24,47 @@ export default function AppHeader({
   hideMenu = false,
   hideSettings = false
 }: AppHeaderProps) {
+  // US-HDR-010: Add shadow on scroll
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const isScrolled = window.scrollY > 10;
+      if (isScrolled !== scrolled) {
+        setScrolled(isScrolled);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, [scrolled]);
   return (
-    <header className={`${styles.appHeader} ${styles[variant]}`}>
+    <header
+      className={`${styles.appHeader} ${styles[variant]} ${scrolled ? styles.scrolled : ''}`}
+      role="banner"
+      aria-label="Application header"
+    >
       <div className={styles.headerLeft}>
         {!hideMenu && (
           <button
-            className={styles.menuButton}
+            className={`${styles.menuButton} ${styles.rippleEffect}`}
             onClick={onMenuClick}
-            aria-label="Open menu"
+            aria-label="Open navigation menu"
+            aria-expanded="false"
+            aria-controls="navigation-drawer"
           >
             <Menu size={24} strokeWidth={2} />
+            <span className={styles.ripple}></span>
           </button>
         )}
       </div>
 
       <div className={styles.headerCenter}>
-        <h1 className={styles.headerTitle}>{title}</h1>
+        <h1 className={styles.headerTitle} id="app-title">{title}</h1>
         {subtitle && (
-          <span className={styles.headerSubtitle}>{subtitle}</span>
+          <span className={styles.headerSubtitle} aria-label={`Current page: ${subtitle}`}>
+            {subtitle}
+          </span>
         )}
       </div>
 
@@ -53,23 +76,36 @@ export default function AppHeader({
 
             {!hideSettings && (
               <button
-                className={styles.iconButton}
+                className={`${styles.iconButton} ${styles.rippleEffect}`}
                 onClick={onSettingsClick}
                 aria-label="Open settings"
+                aria-haspopup="dialog"
               >
-                <Settings size={20} strokeWidth={2} />
+                <Settings size={20} strokeWidth={2} className={styles.rotateOnHover} />
+                <span className={styles.ripple}></span>
               </button>
             )}
           </>
         ) : (
-          // Panic mode - show emergency call button
-          <a
-            href="tel:988"
-            className={styles.emergencyCall}
-            aria-label="Call crisis hotline"
-          >
-            <span className={styles.emergencyText}>Call 988</span>
-          </a>
+          // US-HDR-007: Enhanced panic mode with close and emergency buttons
+          <>
+            <button
+              className={styles.closeExerciseBtn}
+              onClick={() => window.history.back()}
+              aria-label="Exit panic mode"
+            >
+              <X size={24} />
+              <span>Exit</span>
+            </button>
+            <a
+              href="tel:988"
+              className={styles.emergencyCall}
+              aria-label="Call crisis hotline"
+            >
+              <Phone size={20} />
+              <span className={styles.emergencyText}>Call 988</span>
+            </a>
+          </>
         )}
       </div>
     </header>
